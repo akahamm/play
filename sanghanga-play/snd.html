@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상한가 — 소리 들어 보기</title>
+<style>
+  body { margin: 0; padding: 20px 16px 60px; background: #1b1a24; color: #efe9dc; font: 16px/1.5 -apple-system, 'Apple SD Gothic Neo', sans-serif; }
+  main { max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px; } h2 { font-size: 17px; margin: 28px 0 8px; color: #e7c66a; }
+  p { margin: 0 0 8px; color: #b9b3a6; font-size: 14px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid #2f2d3c; }
+  .row b { flex: 1; font-weight: 600; } .row small { color: #9d978b; font-size: 13px; text-align: right; }
+  button { min-width: 64px; height: 40px; border: 0; border-radius: 8px; background: #e7c66a; color: #1b1a24; font: inherit; font-weight: 700; cursor: pointer; }
+  button.on { background: #7fd1a0; } button.stop { background: #3a3848; color: #efe9dc; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+  .grid button { width: 100%; text-align: left; padding: 0 12px; }
+  .grid button small { font-weight: 400; opacity: .7; }
+</style>
+</head>
+<body>
+<main>
+  <h1>소리 들어 보기</h1>
+  <p>게임에 들어간 배경음과 효과음을 한자리에서 들어 보는 쪽입니다. 음량은 게임에서 나는 그대로입니다.</p>
+  <h2>배경음 <button class="stop" id="stop">멈춤</button></h2>
+  <div id="bgm"></div>
+  <h2>효과음</h2>
+  <div class="grid" id="sfx"></div>
+</main>
+<script>
+  const G = {}, SH = {};   // sound.js 가 보는 것(게임 밖이라 빈 것)
+</script>
+<script src="js/ui/sound.js"></script>
+<script>
+  SND.on = true;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  document.getElementById('bgm').innerHTML = Object.entries(BGM).map(([k, b]) =>
+    `<div class="row"><button data-bgm="${k}">듣기</button><b>${esc(b.ko || k)}</b><small>${esc(b.credit.replace(/"/g, ''))}</small></div>`).join('');
+  const names = [...new Set([...Object.keys(sfx.FILE), ...Object.keys(SFX)])];
+  document.getElementById('sfx').innerHTML = names.map(k =>
+    `<button data-sfx="${k}">${esc((sfx.FILE[k] && sfx.FILE[k].ko) || sfx.KO[k] || k)} <small>${sfx.FILE[k] ? '' : '(합성)'}</small></button>`).join('');
+  addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    document.querySelectorAll('[data-bgm]').forEach(x => x.classList.remove('on'));
+    if (b.dataset.bgm) { SND.cur = null; bgmPlay(b.dataset.bgm); b.classList.add('on'); }
+    else if (b.dataset.sfx) { sfx(b.dataset.sfx); const cur = document.querySelector(`[data-bgm="${SND.cur}"]`); if (cur) cur.classList.add('on'); }
+    else if (b.id === 'stop') { if (SND.el) SND.el.pause(); SND.cur = null; SND.want = null; }
+  });
+</script>
+</body>
+</html>

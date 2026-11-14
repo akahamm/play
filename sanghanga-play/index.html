@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="상한가">
+<meta name="theme-color" content="#0b0e1a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="robots" content="noindex">
+<title>상한가 — 여의도 1995 · 시험판</title>
+<link rel="stylesheet" href="css/game.css?v=11150527">
+</head><body>
+<script>window.GAME_VER = "판 1115-0527 · 566ded7";</script>
+<script>
+/* 카톡 안 브라우저면 휴대폰 기본 브라우저로 넘김(카톡 바는 웹이 없앨 수 없음) · 안 되면 안내 한 장 — 그림책 올리기(pages_wrap.py)와 같은 코드 */
+(function(){var ua=navigator.userAgent||'';if(!/KAKAOTALK/i.test(ua))return;
+var url=location.href;try{location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(url);}catch(e){}
+setTimeout(function(){var d=document.createElement('div');d.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#0b0e1a;color:#f6eedb;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font:16px sans-serif;text-align:center;padding:24px');
+d.innerHTML='<div style="font-size:max(20px,var(--fl));color:#f2c14e">기본 브라우저에서 열어 주세요</div><div>카톡 안에서는 화면 위아래 바를 없앨 수 없어요.<br>오른쪽 위(아이폰은 아래) <b>⋯</b> 메뉴 → <b>다른 브라우저로 열기</b></div><button style="font-size:max(16px,var(--fl));padding:12px 18px;border-radius:8px;border:0;background:#f2c14e;color:#0b0e1a">그냥 여기서 보기</button>';
+d.querySelector('button').onclick=function(){d.remove();};document.body.appendChild(d);},900);})();
+</script>
+<div id="wrap"><div id="stage">
+  <div id="screen"></div>
+  <div id="ovl"></div>
+  <div id="toast" class="px gold"></div>
+  <canvas id="fx"></canvas>
+</div></div>
+<!-- 데이터: 변환기가 만든 묶음(파일로 열어도 읽힘) -->
+<script src="data/bundle.js?v=11150527"></script>
+<!-- 엔진(화면 없이 돎 — 로봇 시험이 같은 파일을 씀) · 폴더 = 층: core 뼈대(흐름 · 조건과 효과 틀 · 날짜 · 저장) / rules 이 게임 규칙(돈 고리 · 진급 · 결산 · 가게) — 싣는 차례는 그대로(js/README.md) -->
+<script src="js/core/data.js?v=11150527"></script>
+<script src="js/rules/game.js?v=11150527"></script>
+<script src="js/core/state.js?v=11150527"></script>
+<script src="js/core/time.js?v=11150527"></script>
+<script src="js/core/events.js?v=11150527"></script>
+<script src="js/rules/actions.js?v=11150527"></script>
+<script src="js/rules/settle.js?v=11150527"></script>
+<script src="js/rules/promo.js?v=11150527"></script>
+<script src="js/rules/shop.js?v=11150527"></script>
+<script src="js/rules/r2.js?v=11150527"></script>
+<script src="js/core/land.js?v=11150527"></script>
+<script src="js/rules/loop.js?v=11150527"></script>
+<script src="js/core/save.js?v=11150527"></script>
+<script src="js/core/flow.js?v=11150527"></script>
+<!-- 화면 -->
+<script src="js/map2/iso.js?v=11150527"></script>
+<script src="js/map2/kinds.js?v=11150527"></script>
+<script src="js/map2/regions.js?v=11150527"></script>
+<script src="js/map2/traffic.js?v=11150527"></script>
+<script src="js/map2/check.js?v=11150527"></script>
+<script src="js/map2/render.js?v=11150527"></script>
+<script src="js/ui/common.js?v=11150527"></script>
+<script src="js/ui/map.js?v=11150527"></script>
+<script src="js/ui/world.js?v=11150527"></script>
+<script src="js/ui/bridge.js?v=11150527"></script>
+<script src="js/ui/npc.js?v=11150527"></script>
+<script src="js/ui/dialog.js?v=11150527"></script>
+<script src="js/ui/shop.js?v=11150527"></script>
+<script src="js/ui/album.js?v=11150527"></script>
+<script src="js/ui/tick.js?v=11150527"></script>
+<script src="js/ui/mid4.js?v=11150527"></script>
+<script src="js/ui/sound.js?v=11150527"></script>
+<script src="js/ui/input.js?v=11150527"></script>
+<script src="js/ui/land.js?v=11150527"></script>
+<script src="js/ui/loop.js?v=11150527"></script>
+<script src="js/ui/devtest.js?v=11150527"></script>
+<script src="js/ui/main.js?v=11150527"></script>
+<script>
+/* 안드로이드 등: 첫 터치에 전체화면 + 가로 잠금(못 하는 브라우저는 그냥 넘어감) */
+(function(){var standalone=(window.navigator.standalone===true)||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: standalone)').matches;
+if(standalone)return;var d=document.documentElement;var req=d.requestFullscreen||d.webkitRequestFullscreen;if(!req)return;
+function go(){document.removeEventListener('pointerdown',go,true);try{var p=req.call(d,{navigationUI:'hide'});if(p&&p.catch)p.catch(function(){});
+if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});}catch(e){}}
+document.addEventListener('pointerdown',go,true);})();
+</script>
+</body></html>
